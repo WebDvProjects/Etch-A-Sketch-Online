@@ -1,0 +1,23 @@
+body{
+    background-color: rgb(28, 26, 26);
+}
+
+.canvas{
+    display: flex;
+    flex-wrap: wrap;
+    border: solid black;
+    padding: 0;
+
+    /* Take into consideration grid offsets */
+    width: 500px;
+    height: 500px;
+}
+
+.pixel{
+    /* border: solid; */
+    /* flex-grow: 0; */
+}
+
+/* .pixelate{
+  background-color: bisque; 
+} */

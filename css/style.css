@@ -1,27 +1,172 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     background-color: rgb(28, 26, 26);
+    height: 100vh;
+}
+
+.hide{
+    display: none;
+}
+
+.content{
+    /* flex: 1 auto; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar{
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+
+    height: 100vh;
+    width: max-content;
+    /* min-width: 15vw;
+    max-width: 30vw; */
+
+    /* border: 5px solid; */
+    
+    position: fixed;
+    overflow: auto;
+    top: 0px;
+    left: 0;
+
+    /* transition: all 300ms ease-in-out; */
+
+}
+
+.toolbar div.settings, .toolbar div.settings div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toolbar div.settings{
+
+    margin-bottom: 10%;
+    padding: 8px;
+    gap: 10px;
+
+    margin-bottom: 30px;
+
+    transition: all 300ms ease-in-out;
+}
+
+.sidebar p{
+    margin: 0;
+}
+
+.sidebar .slider{
+    /* width: 50%; */
+}
+
+.sidebar .icon{
+    width: 40px;
+    border: solid;
+    border-radius: 50%;
+    background-color: white;
+    padding: 5px;
+}
+
+.menu-icon{
+    /* background: #333333; */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* position: fixed;
+    top: 0px;
+    left: 10px;
+
+    /* margin-left: 0; */
+    /* margin: auto; 
+    
+    width: max-content; */
+}
+
+.menu-icon img{
+    width: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid;
+    box-sizing: initial;
+}
+
+.sidebar .menu-icon img:hover{
+    cursor: pointer;
+}
+
+.toolbar{
+    border: 3px red solid;
+    margin: 0 8px;
+    background: #444444;
+    height: 100vh;
+    transition: all 300ms ease-in-out;
+    filter: drop-shadow(0 0 0.75rem red);
+
+    /* overflow: auto;
+    position: fixed; */
+}
+
+/* horizontal section of a tool bar */
+.sidebar .toolbar div.h-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+/* higher specificity for toggling
+selected icons */
+.sidebar .settings .selected{
+    background-color: rgb(18, 113, 207);
+}
+
+.icon:hover{
+    filter: drop-shadow(0 0 0.75rem black);
+    background-color: bisque;
+    cursor: pointer;
 }
 
 .canvas{
     display: flex;
     flex-wrap: wrap;
+
+    background-color: white;
     border: 5px solid black;
     padding: 0;
 
-    /* Take into consideration grid offsets */
-    width: 500px;
-    height: 500px;
+    min-width: 300px;
+    max-width: 600px;
+    width: 60vw;
+    /* height: 500px; */
+
+    aspect-ratio: 1/1;
 }
 
 .pixel{
-    border: 1px solid;
+    flex: 1 1 auto;
+
+    /* sets the border size to take up inner content of the div
+    so it becomes part of the width/height
+    so width = width - (borderSize * 2)
+    we multiply by 2 becuase border has 2 sides on both horizontal and vertical
+    */
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: thin solid;
     /* flex-grow: 0; */
 }
 
-.grid-lines{
+.remove-grid-lines{
     border-color: transparent;
 }
-
-/* .pixelate{
-  background-color: bisque; 
-} */

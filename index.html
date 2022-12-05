@@ -1,16 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="script.js" type="module" defer></script>
+    <script src="grid-manipulation.js" type="module" defer></script>
 
     <title>Etch-a-Sketch Online</title>
-</head>
-<body>
-    <div class="canvas"></div>
-    <button class="button" id="toggle-grid">Grid Lines</button>
-</body>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="menu-icon">
+        <img onclick="toggleSidebar()" src="icons/setting.png" alt="" />
+      </div>
+      <div class="toolbar">
+        <div class="size settings">
+          <p>Grid Size:</p>
+          <span>16x16</span>
+          <input type="range" class="slider" id="size-slider" />
+        </div>
+
+        <div class="colour settings">
+          <div class="pencil-color">
+            <p>Pencil</p>
+            <input type="color" name="" id="pencil-color-selector" />
+          </div>
+          <div class="bg-color">
+            <p>Background</p>
+            <input type="color" name="" id="bg-color-selector" />
+          </div>
+          <img src="icons/rainbow.png" class="icon" alt="Rainbow" />
+        </div>
+
+        <div class="tool settings">
+          <span>Tools</span>
+          <div class="h-section">
+            <img src="icons/pencil.png" class="icon" alt="Pencil" />
+            <img src="icons/eraser.png" class="icon" alt="Eraser" />
+          </div>
+
+          <!-- <input type="range" class="slider" id="pencil-slider" /> -->
+          <img src="icons/fill-color.png" class="icon" alt="Fill-color" />
+        </div>
+
+        <div class="grid settings h-section">
+          <img
+            src="icons/grid.png"
+            class="icon"
+            id="toggle-grid"
+            alt="Grid lines"
+          />
+          <img src="icons/bin.png" class="icon" alt="Clear" />
+        </div>
+
+        <div class="misc settings">
+          <img src="icons/floppy-disk.png" class="icon" alt="Save" />
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="canvas"></div>
+    </div>
+    <script>
+      function toggleSidebar() {
+        const toolbar = document.querySelector(".toolbar");
+        toolbar.classList.toggle("hide");
+      }
+    </script>
+  </body>
 </html>
+
+<!-- ADD links to footer
+<a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons">Eraser icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons">Fill color icons created by gungyoga04 - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons">Rainbow icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/clear" title="clear icons">Clear icons created by GOFOX - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/grid" title="grid icons">Grid icons created by Pixel perfect - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/save" title="save icons">Save icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Ilham Fitrotul Hayat - Flaticon</a> -->

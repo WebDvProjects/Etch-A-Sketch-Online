@@ -1,12 +1,15 @@
 const canvas = document.querySelector(".canvas");
 // prevent canvas from being dragged
 canvas.setAttribute("draggable", false);
+
+/* Variable definitions */
 let canvas_style = getComputedStyle(canvas);
 let default_grid_size = 16;
 let drawing = false;
 let grid_lines = true;
 let hasChanges = false;
 let current_tool_name = "pencil"
+
 
 // creates and adds squares to a multi-dimensional array and a canvas
 function createSquares(size) {
@@ -20,7 +23,7 @@ function createSquares(size) {
 
   for (let i = 0; i < squares.length; i++) {
     for (let j = 0; j < squares[i].length; j++) {
-      squares[i][j] = createPixel(sq_size);
+      squares[i][j] = createPixel(sq_size, i, j);
     }
   }
   return squares;
@@ -28,7 +31,7 @@ function createSquares(size) {
 
 // creates a single square and adds it to the canvas
 // returns
-function createPixel(size) {
+function createPixel(size, row, col) {
   let square = document.createElement("div");
   square.style.width = size;
   square.style.height = size;
@@ -36,10 +39,12 @@ function createPixel(size) {
   square.style.backgroundColor = 'tranparent';
   if (!grid_lines) square.classList.toggle("remove-grid-lines");
   square.setAttribute("draggable", false);
+  square.setAttribute("row", row)
+  square.setAttribute("col", col)
 
   square.addEventListener("mousedown", (e) => {
     drawing = true;
-    changeColor(e.currentTarget);
+    alterGrid(e.currentTarget);
   });
 
   square.addEventListener("mouseup", (e) => {
@@ -47,7 +52,7 @@ function createPixel(size) {
   });
 
   square.addEventListener("mouseover", (e) => {
-    if (drawing) changeColor(e.currentTarget);
+    if (drawing && current_tool_name!= "fill") alterGrid(e.currentTarget);
   });
 
   canvas.appendChild(square);
@@ -57,9 +62,9 @@ function createPixel(size) {
 
 // Load the squares to the canvas
 let grid_map = createSquares(default_grid_size);
-// removeAllSquares()
-// updatePixelSize(19)
 
+/* Updates the pixels size with the fixed grid dimensions
+ */
 function updatePixelSize(size) {
   //remove all current squares
   removeAllSquares();
@@ -102,7 +107,7 @@ slider.onmouseup = (e) => {
 };
 
 /* CHANGE COLOR */
-let pencil_color = null;
+let pencil_color = '#000000';
 let bg_color = '#ffffff';  // default white
 let rainbow = false;
 
@@ -136,6 +141,19 @@ function toggleRainbow(rainbow_tool){
   console.log('rainbow: ' + `${(rainbow)?"on":"off"}`);
 }
 
+/* COLOR OPERATIONS */
+
+/**
+ * performs certain operations on the pixel square
+ * such as color fill, change background color and clear bg color
+ * @param  {HTMLDivElement} square
+ */
+function alterGrid(square){
+  if(current_tool_name == "fill") mapFill(square)
+  else if(current_tool_name == "eraser") square.style.background = 'transparent'
+  else if(current_tool_name == "pencil") changeColor(square)
+}
+
 function changeColor(square) {
   hasChanges = true;
   if(rainbow){
@@ -149,20 +167,14 @@ function changeColor(square) {
     let random_color = 
       `rgba(${r_int(255)}, ${r_int(255)}, ${r_int(255)}, ${r_float()})`
     square.style.background = random_color
-  }
-  else if(current_tool_name == "fill") mapFill()
-  else if(current_tool_name == "eraser") square.style.background = 'transparent'
-  else if(current_tool_name == "pencil") square.style.background = pencil_color
+  } else square.style.background = pencil_color
 }
 
 function changeBgColor(color){
   canvas.style.backgroundColor = color;
 }
 
-/* FILL FUNCTION */
-function mapFill(square) {
-  // BFS
-}
+
 
 /* TOGGLE GRID-LINES */
 const toggle_grid_btn = document.getElementById("toggle-grid");
@@ -199,11 +211,10 @@ function clear() {
 const tools = document.querySelectorAll(".tool.settings div img.icon")
 tools.forEach(t=>{
   t.addEventListener('click', (e)=>toolManager(e.currentTarget))
-  // console.log(t.getAttribute('alt'))
 })
 
 function toolManager(tool) {
-  tool.classList.toggle('selected')
+  tool.classList.add('selected')
   const tool_name = tool.getAttribute('alt')
   current_tool_name = tool_name
   console.log(current_tool_name);
@@ -215,9 +226,6 @@ function toolManager(tool) {
   })
 }
 
-/* COLORING TOOL FUNCTIONALITY */
-
-
 
 // CURSOR SWITCH (default canvas cursor is pencil)
 // I set toolNames to be equals to the respective cursor classes
@@ -226,3 +234,98 @@ function manageCursor(toolName){
   canvas.classList.remove(...class_list)
   canvas.classList.add(toolName)
 }
+
+
+/* DOWNLOAD BUTTON */
+let download_btn = document.querySelector('a#download')
+download_btn.addEventListener('click', ()=>{
+  // const a = document.createElement('a')
+  // download_btn.append(a)
+})
+
+/* FILL FUNCTION */
+function mapFill(sq) {
+  let r = parseInt(sq.getAttribute('row'))
+  let c = parseInt(sq.getAttribute('col'))
+
+  // the parent color when fill was used
+  const COLOR = sq.style.backgroundColor
+
+  if(!rainbow){
+    console.log(COLOR);
+    console.log(hexTorgb(pencil_color));
+    if (pencil_color==COLOR || COLOR == hexTorgb(pencil_color)){
+      return
+    }
+  }
+
+  // DFS (faster with the use of stack)
+  // console.log(r + c);
+  let stack = [[r, c]]
+  let frontier = new Set() // frontier is used for optimal search for items in the frontier
+  frontier.add([r, c])
+  let visited = new Set()
+
+  while(stack.length > 0){
+    let current = stack.pop()
+    visited.add(current)
+    frontier.delete(current)
+
+    // fill
+    changeColor(grid_map[current[0]][current[1]])
+
+    // get node children/neighbours
+    let states = children(current, COLOR)
+    // console.log(states);
+    for (let i = 0; i < states.length; i++) {
+      // const element = states[i];
+      if (!visited.has(states[i]) && !frontier.has(states[i])) {
+        stack.push(states[i])
+        frontier.add(states[i])
+      }
+    }
+  }
+}
+
+function children(pos, color){
+  const row = pos[0]
+  const col = pos[1]
+  /* 
+  UP: (-1, 0)
+  DOWN:(1, 0)
+  LEFT: (0, -1)
+  RIGHT: (0, 1)
+  */
+ let directions = [
+  [-1,0],
+  [1,0],
+  [0,-1],
+  [0,1]
+ ]
+
+ let neighbours = []
+
+ for (let i = 0; i < directions.length; i++) {
+  const d = directions[i];
+  let newPos = [row+d[0], col+d[1]]
+  
+  // prune
+  if (isWithinGrid(newPos) && isOfColor(newPos, color)) neighbours.push(newPos)
+ }
+ return neighbours
+}
+
+function isOfColor(pos, color){
+  return grid_map[pos[0]][pos[1]].style.backgroundColor == color
+}
+
+function isWithinGrid(pos){
+  return (pos[0] < grid_map.length && pos[0] >= 0 
+    && pos[1] < grid_map[0].length && pos[1] >= 0)
+}
+
+
+function hexTorgb(hex) {
+  return `rgb(${'0x' + hex[1] + hex[2] | 0}, ${'0x' + hex[3] + hex[4] | 0}, ${'0x' + hex[5] + hex[6] | 0})`;
+}
+

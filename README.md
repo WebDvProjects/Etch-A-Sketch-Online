@@ -23,9 +23,11 @@ You can even make confetti pixel art by using the fill tool.
 <img src="screenshots/my-canvas.png" width="300" height="300">
 
 ### Drawing tools
-**Pencil**: typical and default drawing tool
-**Eraser**: allows you to undo the selected trail marks, simply click on the eraser button and drag/click around the pixes you wish to erase
-**Fill**: Fills an enclosed area within the pixel canvas with the current colour selections (that includes rainbow colours)
+**_Pencil_**: typical and default drawing tool
+
+**_Eraser_**: allows you to undo the selected trail marks, simply click on the eraser button and drag/click around the pixes you wish to erase
+
+**_Fill_**: Fills an enclosed area within the pixel canvas with the current colour selections (that includes rainbow colours)
 
 Here's an image of a canvas made with the pencil, fill and ranbow tools
 

@@ -4,9 +4,9 @@ canvas.setAttribute("draggable", false);
 let canvas_style = getComputedStyle(canvas);
 let default_grid_size = 16;
 let drawing = false;
-let fill = true;
 let grid_lines = true;
 let hasChanges = false;
+let current_tool_name = "pencil"
 
 // creates and adds squares to a multi-dimensional array and a canvas
 function createSquares(size) {
@@ -48,10 +48,6 @@ function createPixel(size) {
 
   square.addEventListener("mouseover", (e) => {
     if (drawing) changeColor(e.currentTarget);
-  });
-
-  square.addEventListener("click", (e) => {
-    if (fill) mapFill(e.currentTarget);
   });
 
   canvas.appendChild(square);
@@ -118,6 +114,9 @@ pencil_color = pencil_color_selector.value;
 // allow user to set custom colour from picker
 pencil_color_selector.addEventListener("input", () => {
   pencil_color = pencil_color_selector.value;
+
+  // disable rainbow if selected
+  if (rainbow) toggleRainbow(rainbow_selector)
 });
 
 // Background
@@ -129,11 +128,13 @@ bg_color_selector.addEventListener('input', ()=>{
 
 // Rainbow
 const rainbow_selector = document.querySelector('.icon.rainbow')
-rainbow_selector.addEventListener('click', (e)=>{
-  e.currentTarget.classList.toggle('selected')
+rainbow_selector.addEventListener('click', (e) => toggleRainbow(e.currentTarget))
+
+function toggleRainbow(rainbow_tool){
+  rainbow_tool.classList.toggle('selected')
   rainbow = (rainbow)?false:true
   console.log('rainbow: ' + `${(rainbow)?"on":"off"}`);
-})
+}
 
 function changeColor(square) {
   hasChanges = true;
@@ -148,7 +149,10 @@ function changeColor(square) {
     let random_color = 
       `rgba(${r_int(255)}, ${r_int(255)}, ${r_int(255)}, ${r_float()})`
     square.style.background = random_color
-  }else square.style.background = pencil_color;
+  }
+  else if(current_tool_name == "fill") mapFill()
+  else if(current_tool_name == "eraser") square.style.background = 'transparent'
+  else if(current_tool_name == "pencil") square.style.background = pencil_color
 }
 
 function changeBgColor(color){
@@ -188,4 +192,37 @@ function clear() {
   }
 
   hasChanges = false;
+}
+
+/* TOOL SELECTION */
+
+const tools = document.querySelectorAll(".tool.settings div img.icon")
+tools.forEach(t=>{
+  t.addEventListener('click', (e)=>toolManager(e.currentTarget))
+  // console.log(t.getAttribute('alt'))
+})
+
+function toolManager(tool) {
+  tool.classList.toggle('selected')
+  const tool_name = tool.getAttribute('alt')
+  current_tool_name = tool_name
+  console.log(current_tool_name);
+  // sets cursor
+  manageCursor(tool_name)
+  // unselects all other selection tools
+  tools.forEach(t => {
+    if (t.getAttribute('alt') != tool_name) t.classList.remove('selected')
+  })
+}
+
+/* COLORING TOOL FUNCTIONALITY */
+
+
+
+// CURSOR SWITCH (default canvas cursor is pencil)
+// I set toolNames to be equals to the respective cursor classes
+function manageCursor(toolName){
+  let class_list = ["pencil", "eraser", "fill", "no-tool"];
+  canvas.classList.remove(...class_list)
+  canvas.classList.add(toolName)
 }

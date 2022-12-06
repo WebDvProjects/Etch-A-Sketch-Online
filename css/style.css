@@ -106,7 +106,7 @@ body{
 }
 
 .left.sidebar .slider{
-    max-width: calc(77.391/1045 * 100vw);
+    max-width: calc(13.2vw);
 }
 
 .right.sidebar{
@@ -210,7 +210,7 @@ input:hover, img:hover{
     /* box-sizing: border-box; */
     /* -moz-box-sizing: border-box; */
     /* -webkit-box-sizing: border-box; */
-    border: thin solid;
+    border: thin solid rgba(0, 0, 0, 0.383);
 }
 
 .remove-grid-lines{

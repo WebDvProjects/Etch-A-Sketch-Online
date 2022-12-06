@@ -1,103 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="script.js" type="module" defer></script>
 
-    <link rel="shortcut icon" href="icons/pencil.png" type="image/x-icon">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="script.js" type="module" defer></script>
 
-    <title>Etch-a-Sketch Online</title>
-  </head>
-  <body>
-    <div class="header">
-        <span>ETCH-A-SKETCH</span>
-    </div>
-    <div class="content">
-      <div class="left sidebar">
-        <div class="size settings">
-          <p>Grid Size:</p>
-          <span>16x16</span>
-          <input type="range" class="slider" id="size-slider" />
-        </div>
+  <link rel="shortcut icon" href="icons/rainbow_spiral_1.png" type="image/x-icon">
 
-        <div class="colour settings">
-            <p>Colour Settings</p>
-          <div class="pencil-color">
-            <p>Pencil</p>
-            <input type="color" name="" id="pencil-color-selector" />
-          </div>
-          <div class="bg-color">
-            <p>Background</p>
-            <input type="color" name="" id="bg-color-selector" />
-          </div>
-          <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" />
-        </div>
+  <title>Etch-a-Sketch Online</title>
+</head>
 
-        <div class="tool settings">
-          <span>Tools</span>
-          <div class="h-section">
-            <img src="icons/pencil.png" class="icon selected" alt="pencil" />
-            <img src="icons/eraser.png" class="icon" alt="eraser" />
-          </div>
-
-          <!-- <input type="range" class="slider" id="pencil-slider" /> -->
-          <div class="h-section">
-            <img src="icons/fill-color.png" class="icon" alt="fill" />
-            <img src="icons/no-entry.png" class="icon" alt="no-tool" />
-          </div>
-          
-        </div>
+<body>
+  <div class="header">
+    <span>ETCH-A-SKETCH</span>
+  </div>
+  <div class="content">
+    <div class="left sidebar">
+      <div class="size settings">
+        <p>Grid Size:</p>
+        <span>16x16</span>
+        <input type="range" class="slider" id="size-slider" />
       </div>
-      <div class="canvas pencil"></div>
-      <div class="right sidebar">
-        <div class="grid settings h-section">
-          <img
-            src="icons/grid.png"
-            class="icon"
-            id="toggle-grid"
-            alt="Grid lines"
-          />
-          <img src="icons/bin.png" class="icon clear" alt="Clear" />
+
+      <div class="colour settings">
+        <p>Colour Settings</p>
+        <div class="pencil-color">
+          <p>Pencil</p>
+          <input type="color" name="" id="pencil-color-selector" />
+        </div>
+        <div class="bg-color">
+          <p>Background</p>
+          <input type="color" name="" id="bg-color-selector" />
+        </div>
+        <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" />
+      </div>
+
+      <div class="tool settings">
+        <span>Tools</span>
+        <div class="h-section">
+          <img src="icons/pencil.png" class="icon selected" alt="pencil" />
+          <img src="icons/eraser.png" class="icon" alt="eraser" />
         </div>
 
-        <div class="misc settings">
-            <a href="" download="canvas.png" id="download">
-                <img src="icons/floppy-disk.png" class="icon" alt="Save" />
-            </a>
-          
+        <!-- <input type="range" class="slider" id="pencil-slider" /> -->
+        <div class="h-section">
+          <img src="icons/fill-color.png" class="icon" alt="fill" />
+          <img src="icons/no-entry.png" class="icon" alt="no-tool" />
         </div>
+
       </div>
     </div>
+    <div class="canvas pencil"></div>
+    <div class="right sidebar">
+      <div class="grid settings h-section">
+        <img src="icons/grid.png" class="icon" id="toggle-grid" alt="Grid lines" />
+        <img src="icons/bin.png" class="icon clear" alt="Clear" />
+      </div>
 
-    <div class="footer">
-        <p>Credits</p>
-        <div class="links">
-            <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons" target="_blank">Pencil icon</a>
-            <a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons" target="_blank">Eraser icon</a>
-            <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Fill color icon</a>
-            <a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons" target="_blank">Rainbow icon</a>
-            <a href="https://www.flaticon.com/free-icons/clear" title="clear icons" target="_blank">Clear icon</a>
-            <a href="https://www.flaticon.com/free-icons/grid" title="grid icons" target="_blank">Grid icon</a>
-            <a href="https://www.flaticon.com/free-icons/save" title="save icons" target="_blank">Save icon</a>
-            <a href="https://www.flaticon.com/free-icons/traffic" title="traffic icons" target="_blank">Traffic icon</a>
-            <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Bucket-fill cursor</a>
-        </div>        
+      <div class="misc settings">
+        <!-- <a href="" download="canvas.png" id="download"> -->
+        <img src="icons/floppy-disk.png" class="icon" alt="Save" id="download" />
+        <!-- </a> -->
+
+      </div>
     </div>
-    <script>
-    //   function toggleSidebar() {
-        // const toolbar = document.querySelectorAll("p,span");
-        // toolbar.forEach(p => {
-        //     p.classList.toggle("hide");
-        // })
-    //   }
-    </script>
-  </body>
+  </div>
+
+  <div class="footer">
+    <p>Credits</p>
+    <div class="links">
+      <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons" target="_blank">Pencil icon</a>
+      <a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons" target="_blank">Eraser icon</a>
+      <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Fill color
+        icon</a>
+      <a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons" target="_blank">Rainbow icon</a>
+      <a href="https://www.flaticon.com/free-icons/clear" title="clear icons" target="_blank">Clear icon</a>
+      <a href="https://www.flaticon.com/free-icons/grid" title="grid icons" target="_blank">Grid icon</a>
+      <a href="https://www.flaticon.com/free-icons/save" title="save icons" target="_blank">Save icon</a>
+      <a href="https://www.flaticon.com/free-icons/traffic" title="traffic icons" target="_blank">Traffic icon</a>
+      <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Bucket-fill
+        cursor</a>
+    </div>
+  </div>
+  <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
+  <script>
+    /* 
+    SAVE AS PNG IMAGE
+     */
+
+    let download_btn = document.getElementById('download')
+    download_btn.addEventListener('click', (e) => {
+      const input = document.querySelector('.canvas')
+      html2canvas(input).then((canvas) => {
+        const image = canvas.toDataURL('img/png');
+        const anchor = document.createElement("a")
+        anchor.setAttribute('href', image)
+        anchor.setAttribute('download', 'my-canvas.png')
+        anchor.click()
+        anchor.remove()
+      });
+
+    })
+
+  </script>
+</body>
+
 </html>
 
-<!-- ADD links to footer
+<!-- also added links to footer
 <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons">Eraser icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons">Fill color icons created by gungyoga04 - Flaticon</a>

@@ -13,42 +13,43 @@
   <title>Etch-a-Sketch Online</title>
 </head>
 
-<body>
-  <div class="header">
+<body draggable="false">
+  <div class="header" draggable="false">
     <span>ETCH-A-SKETCH</span>
+    <span class="description">Drag around to draw, hover to the icons to see what they do 😉</span>
   </div>
   <div class="content">
     <div class="left sidebar">
       <div class="size settings">
         <p>Grid Size:</p>
         <span>16x16</span>
-        <input type="range" class="slider" id="size-slider" />
+        <input type="range" class="slider" id="size-slider" title="Set grid size" />
       </div>
 
       <div class="colour settings">
         <p>Colour Settings</p>
         <div class="pencil-color">
           <p>Pencil</p>
-          <input type="color" name="" id="pencil-color-selector" />
+          <input type="color" name="" id="pencil-color-selector" title="pencil colour"/>
         </div>
         <div class="bg-color">
           <p>Background</p>
-          <input type="color" name="" id="bg-color-selector" />
+          <input type="color" name="" id="bg-color-selector" title="background colour"/>
         </div>
-        <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" />
+        <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" title="Random colour"/>
       </div>
 
       <div class="tool settings">
         <span>Tools</span>
         <div class="h-section">
-          <img src="icons/pencil.png" class="icon selected" alt="pencil" />
-          <img src="icons/eraser.png" class="icon" alt="eraser" />
+          <img src="icons/pencil.png" class="icon selected" alt="pencil" title="pencil tool"/>
+          <img src="icons/eraser.png" class="icon" alt="eraser" title="eraser tool" />
         </div>
 
         <!-- <input type="range" class="slider" id="pencil-slider" /> -->
         <div class="h-section">
-          <img src="icons/fill-color.png" class="icon" alt="fill" />
-          <img src="icons/no-entry.png" class="icon" alt="no-tool" />
+          <img src="icons/fill-color.png" class="icon" alt="fill" title="bucket fill" />
+          <img src="icons/no-entry.png" class="icon" alt="no-tool" title="no selection" />
         </div>
 
       </div>
@@ -56,13 +57,13 @@
     <div class="canvas pencil"></div>
     <div class="right sidebar">
       <div class="grid settings h-section">
-        <img src="icons/grid.png" class="icon" id="toggle-grid" alt="Grid lines" />
-        <img src="icons/bin.png" class="icon clear" alt="Clear" />
+        <img src="icons/grid.png" class="icon" id="toggle-grid" alt="Grid lines" title="toggle grid lines" />
+        <img src="icons/bin.png" class="icon clear" alt="Clear" title="clear"/>
       </div>
 
       <div class="misc settings">
         <!-- <a href="" download="canvas.png" id="download"> -->
-        <img src="icons/floppy-disk.png" class="icon" alt="Save" id="download" />
+        <img src="icons/floppy-disk.png" class="icon" alt="Save" id="download" title="download canvas" />
         <!-- </a> -->
 
       </div>

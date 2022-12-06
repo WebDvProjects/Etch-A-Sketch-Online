@@ -21,7 +21,7 @@ body{
     height: max-content;
     background: rgba(14, 13, 13, 0.889);
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 10px;
 
     color: white;
     font-weight: 900;
@@ -29,21 +29,39 @@ body{
     font-family: 'Comic Sans MS', Impact, sans-serif;
 }
 
+.header span.description{
+    font-size: 16px;
+    display: block;
+}
+
 .footer{
     position: fixed;
+    overflow: hidden;
     bottom: 0;
     width: 100vw;
     padding: 8px;
 
-    background: 
-        linear-gradient(black, rgba(50, 42, 165, 0.714));
+    background: linear-gradient(black, rgba(50, 42, 165, 0.714));
 
     font-family: Impact, 'Comic Sans MS', sans-serif;
     color: rgb(86, 125, 159);
     font-size: min(calc(16/1045 * 100vw), 16px);
 
+    margin-top: auto;
+    transition:all 500ms ease-in-out;
+    
+    height: 10px;
+}
 
+.footer *{
+    visibility: hidden;
+}
 
+.footer:hover *{
+    visibility: visible;
+}
+.footer:hover{
+    height: max-content;
 }
 
 .footer .links{

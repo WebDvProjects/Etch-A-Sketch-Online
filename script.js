@@ -50,7 +50,7 @@ function createPixel(size, row, col) {
     drawing = false;
   });
 
-  square.addEventListener("mouseover", (e) => {
+  square.addEventListener("mouseenter", (e) => {
     if (drawing && current_tool_name != "fill") alterGrid(e.currentTarget);
   });
 

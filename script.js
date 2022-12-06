@@ -4,7 +4,7 @@ let canvas_style = getComputedStyle(canvas);
 let default_grid_size = 16;
 let drawing = false;
 let fill = true;
-export let grid_lines = true;
+let grid_lines = true;
 
 
 // creates and adds squares to a multi-dimensional array and a canvas
@@ -131,5 +131,3 @@ toggle_grid_btn.addEventListener("click", function () {
   });
   grid_lines = (grid_lines) ? false:true
 });
-
-export { grid_map, updatePixelSize };

@@ -11,11 +11,8 @@
     <title>Etch-a-Sketch Online</title>
   </head>
   <body>
-    <div class="sidebar">
-      <div class="menu-icon">
-        <img onclick="toggleSidebar()" src="icons/setting.png" alt="" />
-      </div>
-      <div class="toolbar">
+    <div class="content">
+      <div class="left sidebar">
         <div class="size settings">
           <p>Grid Size:</p>
           <span>16x16</span>
@@ -23,6 +20,7 @@
         </div>
 
         <div class="colour settings">
+            <p>Colour Settings</p>
           <div class="pencil-color">
             <p>Pencil</p>
             <input type="color" name="" id="pencil-color-selector" />
@@ -44,7 +42,9 @@
           <!-- <input type="range" class="slider" id="pencil-slider" /> -->
           <img src="icons/fill-color.png" class="icon" alt="Fill-color" />
         </div>
-
+      </div>
+      <div class="canvas"></div>
+      <div class="right sidebar">
         <div class="grid settings h-section">
           <img
             src="icons/grid.png"
@@ -59,9 +59,6 @@
           <img src="icons/floppy-disk.png" class="icon" alt="Save" />
         </div>
       </div>
-    </div>
-    <div class="content">
-      <div class="canvas"></div>
     </div>
     <script>
       function toggleSidebar() {

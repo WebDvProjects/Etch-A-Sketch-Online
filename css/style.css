@@ -22,104 +22,80 @@ body{
 }
 
 .sidebar{
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
+    text-align: center;
+    background-color: rgba(200, 28, 56, 0.933);
 
-    height: 100vh;
-    width: max-content;
-    /* min-width: 15vw;
-    max-width: 30vw; */
+    background: linear-gradient(rgba(56, 56, 177, 0.831), rgba(255, 0, 0, 0.838));
 
-    /* border: 5px solid; */
+    height:60vw;
+    max-height: 600px;
+    max-width: max-content;
     
-    position: fixed;
-    overflow: auto;
-    top: 0px;
-    left: 0;
+    padding: 20px 0;
 
-    /* transition: all 300ms ease-in-out; */
-
+    /* color: rgba(232, 210, 15, 0.924); */
+    color: black;
+    font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 0 0px 2px white;
 }
 
-.toolbar div.settings, .toolbar div.settings div{
+.left.sidebar{
+    border-radius: 25px 0 0 25px;
+}
+
+.left.sidebar .slider{
+    max-width: 60%;
+}
+
+.right.sidebar{
+    border-radius: 0 25px 25px 0;
+}
+
+.sidebar div.settings, .sidebar{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
-.toolbar div.settings{
+.sidebar div.settings{
 
     margin-bottom: 10%;
     padding: 8px;
     gap: 10px;
 
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
+}
 
-    transition: all 300ms ease-in-out;
+div.settings div p, 
+.left.sidebar .size.settings span{
+    color: rgba(232, 210, 15, 0.924);
+    text-shadow: 0 0 0.75rem black;
+    margin-bottom: 8px;
+}
+
+.size.settings p, .size.settings span,
+.size.settings input{
+    display: block;
 }
 
 .sidebar p{
     margin: 0;
 }
 
-.sidebar .slider{
-    /* width: 50%; */
-}
-
 .sidebar .icon{
     width: 40px;
-    border: solid;
+    border: solid black;
     border-radius: 50%;
     background-color: white;
     padding: 5px;
 }
 
-.menu-icon{
-    /* background: #333333; */
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* position: fixed;
-    top: 0px;
-    left: 10px;
-
-    /* margin-left: 0; */
-    /* margin: auto; 
-    
-    width: max-content; */
-}
-
-.menu-icon img{
-    width: 60px;
-    border-radius: 50%;
-    background: white;
-    border: 4px solid;
-    box-sizing: initial;
-}
-
-.sidebar .menu-icon img:hover{
-    cursor: pointer;
-}
-
-.toolbar{
-    border: 3px red solid;
-    margin: 0 8px;
-    background: #444444;
-    height: 100vh;
-    transition: all 300ms ease-in-out;
-    filter: drop-shadow(0 0 0.75rem red);
-
-    /* overflow: auto;
-    position: fixed; */
-}
-
 /* horizontal section of a tool bar */
-.sidebar .toolbar div.h-section{
+.sidebar div.h-section{
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     align-items: center;
     justify-content: center;
 }
@@ -133,6 +109,9 @@ selected icons */
 .icon:hover{
     filter: drop-shadow(0 0 0.75rem black);
     background-color: bisque;
+}
+
+input:hover, img:hover{
     cursor: pointer;
 }
 
@@ -154,17 +133,10 @@ selected icons */
 
 .pixel{
     flex: 1 1 auto;
-
-    /* sets the border size to take up inner content of the div
-    so it becomes part of the width/height
-    so width = width - (borderSize * 2)
-    we multiply by 2 becuase border has 2 sides on both horizontal and vertical
-    */
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    /* box-sizing: border-box; */
+    /* -moz-box-sizing: border-box; */
+    /* -webkit-box-sizing: border-box; */
     border: thin solid;
-    /* flex-grow: 0; */
 }
 
 .remove-grid-lines{

@@ -8,9 +8,14 @@
     <script src="script.js" type="module" defer></script>
     <script src="grid-manipulation.js" type="module" defer></script>
 
+    <link rel="shortcut icon" href="icons/pencil.png" type="image/x-icon">
+
     <title>Etch-a-Sketch Online</title>
   </head>
   <body>
+    <div class="header">
+        <span>ETCH-A-SKETCH</span>
+    </div>
     <div class="content">
       <div class="left sidebar">
         <div class="size settings">
@@ -29,7 +34,7 @@
             <p>Background</p>
             <input type="color" name="" id="bg-color-selector" />
           </div>
-          <img src="icons/rainbow.png" class="icon" alt="Rainbow" />
+          <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" />
         </div>
 
         <div class="tool settings">
@@ -40,10 +45,14 @@
           </div>
 
           <!-- <input type="range" class="slider" id="pencil-slider" /> -->
-          <img src="icons/fill-color.png" class="icon" alt="Fill-color" />
+          <div class="h-section">
+            <img src="icons/fill-color.png" class="icon" alt="Fill-color" />
+            <img src="icons/no-entry.png" class="icon" alt="No-color" />
+          </div>
+          
         </div>
       </div>
-      <div class="canvas"></div>
+      <div class="canvas pencil"></div>
       <div class="right sidebar">
         <div class="grid settings h-section">
           <img
@@ -52,7 +61,7 @@
             id="toggle-grid"
             alt="Grid lines"
           />
-          <img src="icons/bin.png" class="icon" alt="Clear" />
+          <img src="icons/bin.png" class="icon clear" alt="Clear" />
         </div>
 
         <div class="misc settings">
@@ -60,11 +69,28 @@
         </div>
       </div>
     </div>
+
+    <div class="footer">
+        <p>Credits</p>
+        <div class="links">
+            <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons" target="_blank">Pencil icon</a>
+            <a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons" target="_blank">Eraser icon</a>
+            <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Fill color icon</a>
+            <a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons" target="_blank">Rainbow icon</a>
+            <a href="https://www.flaticon.com/free-icons/clear" title="clear icons" target="_blank">Clear icon</a>
+            <a href="https://www.flaticon.com/free-icons/grid" title="grid icons" target="_blank">Grid icon</a>
+            <a href="https://www.flaticon.com/free-icons/save" title="save icons" target="_blank">Save icon</a>
+            <a href="https://www.flaticon.com/free-icons/traffic" title="traffic icons" target="_blank">Traffic icon</a>
+            <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Bucket-fill cursor</a>
+        </div>        
+    </div>
     <script>
-      function toggleSidebar() {
-        const toolbar = document.querySelector(".toolbar");
-        toolbar.classList.toggle("hide");
-      }
+    //   function toggleSidebar() {
+        // const toolbar = document.querySelectorAll("p,span");
+        // toolbar.forEach(p => {
+        //     p.classList.toggle("hide");
+        // })
+    //   }
     </script>
   </body>
 </html>
@@ -77,4 +103,3 @@
 <a href="https://www.flaticon.com/free-icons/clear" title="clear icons">Clear icons created by GOFOX - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/grid" title="grid icons">Grid icons created by Pixel perfect - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/save" title="save icons">Save icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Ilham Fitrotul Hayat - Flaticon</a> -->

@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-align: center;
+
 }
 
 body{
@@ -13,16 +15,64 @@ body{
     display: none;
 }
 
+.header{
+    position: sticky;
+    top: 0;
+    height: max-content;
+    background: rgba(14, 13, 13, 0.889);
+    margin-bottom: 20px;
+    padding: 20px;
+
+    color: white;
+    font-weight: 900;
+    font-size: min(calc(40/1045 * 100vw), 40px);
+    font-family: 'Comic Sans MS', Impact, sans-serif;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 8px;
+
+    background: 
+        linear-gradient(black, rgba(50, 42, 165, 0.714));
+
+    font-family: Impact, 'Comic Sans MS', sans-serif;
+    color: rgb(86, 125, 159);
+    font-size: min(calc(16/1045 * 100vw), 16px);
+
+
+
+}
+
+.footer .links{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.footer a{
+    text-decoration: none;
+    color: rgb(86, 125, 159);
+}
+
+.footer a:hover{
+    filter: drop-shadow(0 0 0.75rem white);
+}
+
 .content{
     /* flex: 1 auto; */
-    height: 100%;
+    height: max-content;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .sidebar{
-    text-align: center;
     background-color: rgba(200, 28, 56, 0.933);
 
     background: linear-gradient(rgba(56, 56, 177, 0.831), rgba(255, 0, 0, 0.838));
@@ -30,12 +80,23 @@ body{
     height:60vw;
     max-height: 600px;
     max-width: max-content;
+    min-height: 300px;
     
     padding: 20px 0;
 
+
+}
+
+.sidebar p,
+.sidebar span{
     /* color: rgba(232, 210, 15, 0.924); */
     color: black;
     font-weight: 600;
+    /* max-width: 13.2vw; */
+    font-size: min(calc(16/1045 * 100vw), 16px);
+
+
+
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-shadow: 0 0px 2px white;
 }
@@ -45,7 +106,7 @@ body{
 }
 
 .left.sidebar .slider{
-    max-width: 60%;
+    max-width: calc(77.391/1045 * 100vw);
 }
 
 .right.sidebar{
@@ -57,7 +118,15 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+
+    /* flex-wrap: wrap; */
 }
+
+.sidebar div.settings, .h-section{
+    flex-wrap: wrap;
+}
+
+
 
 .sidebar div.settings{
 
@@ -102,8 +171,13 @@ div.settings div p,
 
 /* higher specificity for toggling
 selected icons */
-.sidebar .settings .selected{
-    background-color: rgb(18, 113, 207);
+.icon.selected{
+    background-color: rgb(235, 86, 168);
+    /* filter: drop-shadow(0 0 0.5rem rgb(225, 255, 0)); */
+    border: 5px solid gold;
+}
+.icon.selected:hover{
+    /* background-color: rgb(90, 156, 222); */
 }
 
 .icon:hover{
@@ -141,4 +215,24 @@ input:hover, img:hover{
 
 .remove-grid-lines{
     border-color: transparent;
+}
+
+/* .canvas{
+    cursor: auto;
+} */
+
+.pencil{
+    cursor: url('../icons/pencil.png') 0 26, auto;
+}
+
+.eraser{
+    cursor: url('../icons/eraser.png') 0 26, auto;
+}
+
+.fill{
+    cursor: url('../icons/bucket-fill.png') 0 30, auto;
+}
+
+.no-tool{
+    cursor: url('../icons/no-entry.png') 13 13, auto;
 }

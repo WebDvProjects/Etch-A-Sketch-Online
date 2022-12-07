@@ -3,7 +3,7 @@ An online drawing tool with a canvas of scalable pixel-like grids.
 
 [Link to page](https://caykay.github.io/Etch-A-Sketch-Online/)
 
-<img src="screenshots/Screenshot%202022-12-07%20at%2012.48.33%20am.png" width="500">
+<img src="screenshots/goku_ss_no_grid.png" width="500">
 
 ## Features
 
@@ -29,9 +29,9 @@ You can even make confetti pixel art by using the fill tool.
 
 **_Fill_**: Fills an enclosed area within the pixel canvas with the current colour selections (that includes rainbow colours)
 
-Here's an image of a canvas made with the pencil, fill and ranbow tools
+Here's a saved pixel art of a goku made with the pencil, and fill
 
-<img src="screenshots/sprinkle_cup.png" width="300" height="300">
+<img src="screenshots/goku3.png" width="300" height="300" alt="goku-grid">
 
 
 ### Grid Lines

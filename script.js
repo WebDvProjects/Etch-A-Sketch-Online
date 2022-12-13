@@ -1,25 +1,41 @@
-const canvas = document.querySelector(".canvas");
+const canvas = document.getElementById('canvas')
 // prevent canvas from being dragged
 canvas.setAttribute("draggable", false);
 
 /* Variable definitions */
 let canvas_style = getComputedStyle(canvas);
-let default_grid_size = 50;
-let drawing = false;
-let grid_lines = true;
-let hasChanges = false;
-let current_tool_name = "pencil";
+// you can tweak these to your liking
+const DEFAULT_GRID_SIZE = 20;
+const MIN_GRID_SIZE = 2;
+const MAX_GRID_SIZE = 64;
 
-// creates and adds squares to a multi-dimensional array and a canvas
+
+let current_grid_size = DEFAULT_GRID_SIZE;
+
+
+let drawing = false;  // the drawing state
+let grid_lines = false;  // default grid lines is false
+let hasChanges = false;  // the canvas starts with no changes on the pixels
+let current_tool_name = "pencil";  // default drawing tool set to 'pencil'
+
+/*  
+creates and adds squares to a multi-dimensional array and a canvas
+The array will be useful when it comes to performing grid search and
+color fill and posibilities of other operations in the future
+ */
 function createSquares(size) {
-  // delete grid_map;
+  // define the number of rows by given size
   let squares = new Array(size);
+  // populate the each row with columns of given size
   for (let i = 0; i < squares.length; i++) {
     squares[i] = new Array(squares.length);
   }
 
+  // calculate the size in % for each square to occupy
+  // in a column and row
   let sq_size = `${(1 / size) * 100}%`;
 
+  // create and add the pixles/square to the multi-dimensional array
   for (let i = 0; i < squares.length; i++) {
     for (let j = 0; j < squares[i].length; j++) {
       squares[i][j] = createPixel(sq_size, i, j);
@@ -32,79 +48,95 @@ function createSquares(size) {
 // returns
 function createPixel(size, row, col) {
   let square = document.createElement("div");
+  // define the pixel size
   square.style.width = size;
   square.style.height = size;
+  // give its the default classes and style
   square.classList.toggle("pixel");
   square.style.backgroundColor = "tranparent";
+  // if the grid_line default setting is not set to true then clear the default
+  // border lines that make the pixels appear like a grid structure
   if (!grid_lines) square.classList.toggle("remove-grid-lines");
-  square.setAttribute("draggable", false);
+
+  square.setAttribute("draggable", false);  // TODO: this is useless as we already prevent the default dragging behaviour
+  // store the position the pixel has relative to the canvas (useful in "mapFill" function)
   square.setAttribute("row", row);
   square.setAttribute("col", col);
 
-  square.addEventListener("mousedown", (e) => {
-    drawing = true;
-    alterGrid(e.currentTarget);
-  });
+  // prevent drag behaviour
+  square.addEventListener('dragstart', e => {
+    // when a dragstart is fired, 
+    // prevent default behaviour of dragging the element
+    // we won't need to set draggable to false
+    e.preventDefault()
+  })
 
-  square.addEventListener("mouseup", (e) => {
-    drawing = false;
-  });
+  // set up mouse event listeners
+  square.addEventListener("mousedown", handleMouseDown);
+  square.addEventListener("mouseenter", handleMouseEnter);
+  // Set up touch event listeners
+  square.addEventListener('touchstart', handleTouchStart);
+  square.addEventListener('touchmove', handleTouchMove, false);
 
-  square.addEventListener("mouseenter", (e) => {
-    if (drawing && current_tool_name != "fill") alterGrid(e.currentTarget);
-  });
+  /*  Note: no mouseup and touchend event was set up because we have a general one set at the body
+   since it is bubbled
+ */
 
+  //  add pixel square to parent_canvas
   canvas.appendChild(square);
 
   return square;
 }
-
-// Load the squares to the canvas
-let grid_map = createSquares(default_grid_size);
 
 /* Updates the pixels size with the fixed grid dimensions
  */
 function updatePixelSize(size) {
   //remove all current squares
   removeAllSquares();
-
+  // create new grid with updated size
   grid_map = createSquares(size);
 }
 
 function removeAllSquares() {
-  grid_map.forEach((row) => {
-    row.forEach((sq) => {
-      sq.remove();
-    });
-  });
+  // remove all current squares/pixes from the canvas
+  // canvas.innerHTML = ''; // ?? Alternative
+
+  while (canvas.firstChild){
+    canvas.removeChild(canvas.firstChild);
+  }
+
   grid_map = null;
   hasChanges = false;
 }
-/* SLIDER SECTION */
+
+/* SLIDER SECTION:
+Handles slider and allows it to manipulate the canvas/grid size
+*/
 let slider = document.getElementById("size-slider");
 let value_display = document.querySelector(".size.settings span");
-slider.setAttribute("min", "1");
-slider.setAttribute("max", "100");
-slider.value = default_grid_size;
-value_display.textContent = `${default_grid_size}x${default_grid_size}`;
-let current_grid_size = default_grid_size;
+slider.setAttribute("min", MIN_GRID_SIZE);
+slider.setAttribute("max", MAX_GRID_SIZE);
+slider.value = DEFAULT_GRID_SIZE;
+value_display.textContent = `${DEFAULT_GRID_SIZE}x${DEFAULT_GRID_SIZE}`;
+
 
 let dragging = false;
 slider.addEventListener("input", (e) => {
   const value = e.currentTarget.value;
   value_display.textContent = `${value}x${value}`;
 });
-slider.onmousedown = () => {
-  dragging = true; // !not necessary
-};
 
-slider.onmouseup = (e) => {
-  if (dragging) {
-    // ! checking if dragging not necessary
-    const value = e.currentTarget.value;
-    if (value != current_grid_size) updatePixelSize(parseInt(value)); // ! Why doesn't work without parse int when its still a string
-  }
-};
+// mouseup will trigger whenever slider is released after dragging
+// also when clicked and released
+slider.onmouseup = handleSliderEvent;
+// slider.ontouchend = handleSliderEvent; // ! Causes a bug on mobile browsers can't tap on slider
+
+//  Handles slider touch and mouse events
+function handleSliderEvent(e){
+  const value = e.currentTarget.value;
+  if (value != current_grid_size) updatePixelSize(parseInt(value)); // ! Why doesn't work without parse int when its still a string
+
+}
 
 /* CHANGE COLOR */
 let pencil_color = "#000000";
@@ -181,12 +213,14 @@ function changeBgColor(color) {
 /* TOGGLE GRID-LINES */
 const toggle_grid_btn = document.getElementById("toggle-grid");
 toggle_grid_btn.addEventListener("click", function () {
-  grid_map.forEach((row) => {
-    row.forEach((sq) => {
-      sq.classList.toggle("remove-grid-lines");
-    });
-  });
-  grid_lines = grid_lines ? false : true;
+  // set the grid to transparent
+  for (let i = 0; i < grid_map.length; i++) {
+      for (let j = 0; j < grid_map[i].length; j++) {
+        grid_map[i][j].classList.toggle("remove-grid-lines");
+        
+      }    
+  }
+  grid_lines = !grid_lines;
 });
 
 /* CLEAR SCREEN */
@@ -237,8 +271,84 @@ function manageCursor(toolName) {
 }
 
 /* 
-DOWNLOAD BUTTON 
+DOWNLOAD BUTTON : SEE HTML FILE
 */
+
+
+/* Whenever a mouse is released anywhere 
+then drawing action is stopped
+?? This is done in body because of the bubbling effect mouseup offers */
+const body = document.querySelector('body')
+body.addEventListener("mouseup", (e) => {
+  drawing = false;
+});
+
+body.addEventListener("touchend", (e) => {
+  drawing = false;
+});
+
+
+/* MOUSE and TOUCH events for the pixels */
+function handleMouseDown(e) {
+  // start drawing
+  drawing = true;
+  // change the color of the pixel
+  alterGrid(e.currentTarget);
+}
+
+function handleMouseEnter(e) {
+  // If we are drawing then Continue drawing
+  if(drawing && current_tool_name != "fill"){
+    // change the pixel
+    alterGrid(e.currentTarget);
+  }
+}
+// TOUCH EVENTS ON MOBILE BROWSER
+
+// Handle touch start events
+function handleTouchStart(e) {
+  // Prevent the default behavior
+  e.preventDefault();
+
+  // Start drawing
+  drawing = true;
+  console.log("started drawing");
+  alterGrid(e.currentTarget)
+}
+
+// Handle touch move events
+function handleTouchMove(e) {
+  // Prevent the default behavior
+  e.preventDefault();
+
+  // get the touch element and current touch position
+  // ! NOTE: the target will always be the point where touchmove started
+  const touch = e.targetTouches[0]
+  const x = touch.clientX
+  const y = touch.clientY
+
+  // ! So we have to check what element is at position
+  const element = document.elementFromPoint(x, y)
+
+  // if the element is not a pixel ignore
+  if (!element.classList.contains('pixel')) return
+
+
+  // Continue drawing
+  if(drawing && current_tool_name != "fill"){
+    alterGrid(element);
+  }
+  
+}
+
+// Handle touch end events
+function handleTouchEnd(e) {
+  // Prevent the default behavior
+  e.preventDefault();
+
+  // Stop drawing
+  drawing = false;
+}
 
 /* 
 FILL FUNCTION 
@@ -340,3 +450,10 @@ function hexTorgb(hex) {
     ("0x" + hex[3] + hex[4]) | 0
   }, ${("0x" + hex[5] + hex[6]) | 0})`;
 }
+
+
+// Load the squares to the canvas
+let grid_map = null;
+window.onload = () => {
+  grid_map = createSquares(DEFAULT_GRID_SIZE)
+};

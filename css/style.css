@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     text-align: center;
 
     /* Disable highlighting */
@@ -13,7 +14,8 @@
 
 body{
     background-color: rgb(28, 26, 26);
-    height: 100vh;
+    min-height: 100vh;
+    position: relative;
 }
 
 .hide{
@@ -40,9 +42,10 @@ body{
 }
 
 .footer{
-    position: fixed;
+    position: absolute;
     overflow: hidden;
     bottom: 0;
+    
     width: 100vw;
     padding: 8px;
 
@@ -52,7 +55,9 @@ body{
     color: rgb(86, 125, 159);
     font-size: min(calc(16/1045 * 100vw), 16px);
 
-    margin-top: auto;
+    /* margin-top: auto;
+    margin-bottom: 0; */
+
     transition:all 500ms ease-in-out;
     
     height: 10px;
@@ -107,7 +112,7 @@ body{
     
     padding: 20px 0;
 
-
+    user-select: none;
 }
 
 .sidebar p,
@@ -240,7 +245,9 @@ selected icons */
 }
 
 .icon:hover{
-    filter: drop-shadow(0 0 0.75rem black);
+    /* filter: drop-shadow(0 0 0.75rem black);
+    -webkit-filter: -webkit-drop-shadow(0 0 0.75rem black); */
+    box-shadow: 0 0 0.75rem black;
     background-color: bisque;
 }
 
@@ -303,11 +310,12 @@ input:hover, img:hover{
 @media only screen and (max-width:765px){
     .content{
         flex-direction: column;
+        padding-bottom: 30px;
     }
 
     .content .sidebar{
         /* flex-direction: row !important; */
-        height: max-content;
+        height: min-content;
         min-width: 300px;
         max-width: 600px;
         width: 60vw;

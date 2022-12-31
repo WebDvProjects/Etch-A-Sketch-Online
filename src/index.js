@@ -1,3 +1,5 @@
+import html2canvas from "html2canvas";
+
 const canvas = document.getElementById("canvas");
 // prevent canvas from being dragged
 canvas.setAttribute("draggable", false);
@@ -11,7 +13,7 @@ const MAX_GRID_SIZE = 64;
 
 let current_grid_size = DEFAULT_GRID_SIZE;
 
-let drawing = false; // the drawing state
+let drawing = false; // the drawing state of the canvas
 let grid_lines = false; // default grid lines is false
 let hasChanges = false; // the canvas starts with no changes on the pixels
 let current_tool_name = "pencil"; // default drawing tool set to 'pencil'
@@ -275,8 +277,24 @@ function manageCursor(toolName) {
 }
 
 /* 
-DOWNLOAD BUTTON : SEE HTML FILE
+DOWNLOAD BUTTON :
 */
+/* 
+    SAVE AS PNG IMAGE
+     */
+
+let download_btn = document.getElementById("download");
+download_btn.addEventListener("click", (e) => {
+  const input = document.querySelector(".canvas");
+  html2canvas(input).then((canvas) => {
+    const image = canvas.toDataURL("img/png");
+    const anchor = document.createElement("a");
+    anchor.setAttribute("href", image);
+    anchor.setAttribute("download", "my-canvas.png");
+    anchor.click();
+    anchor.remove();
+  });
+});
 
 /* Whenever a mouse is released anywhere 
 then drawing action is stopped

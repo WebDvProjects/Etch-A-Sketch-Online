@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="dist/bundle.js" defer></script>
 
     <link
       rel="shortcut icon"
@@ -177,25 +177,6 @@
         </a>
       </div>
     </div>
-    <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
-    <script>
-      /* 
-    SAVE AS PNG IMAGE
-     */
-
-      let download_btn = document.getElementById("download");
-      download_btn.addEventListener("click", (e) => {
-        const input = document.querySelector(".canvas");
-        html2canvas(input).then((canvas) => {
-          const image = canvas.toDataURL("img/png");
-          const anchor = document.createElement("a");
-          anchor.setAttribute("href", image);
-          anchor.setAttribute("download", "my-canvas.png");
-          anchor.click();
-          anchor.remove();
-        });
-      });
-    </script>
   </body>
 </html>
 

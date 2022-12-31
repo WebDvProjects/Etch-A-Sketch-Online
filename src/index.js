@@ -1,4 +1,6 @@
-const canvas = document.getElementById('canvas')
+import html2canvas from "html2canvas";
+
+const canvas = document.getElementById("canvas");
 // prevent canvas from being dragged
 canvas.setAttribute("draggable", false);
 
@@ -9,14 +11,12 @@ const DEFAULT_GRID_SIZE = 20;
 const MIN_GRID_SIZE = 2;
 const MAX_GRID_SIZE = 64;
 
-
 let current_grid_size = DEFAULT_GRID_SIZE;
 
-
-let drawing = false;  // the drawing state
-let grid_lines = false;  // default grid lines is false
-let hasChanges = false;  // the canvas starts with no changes on the pixels
-let current_tool_name = "pencil";  // default drawing tool set to 'pencil'
+let drawing = false; // the drawing state of the canvas
+let grid_lines = false; // default grid lines is false
+let hasChanges = false; // the canvas starts with no changes on the pixels
+let current_tool_name = "pencil"; // default drawing tool set to 'pencil'
 
 /*  
 creates and adds squares to a multi-dimensional array and a canvas
@@ -58,25 +58,25 @@ function createPixel(size, row, col) {
   // border lines that make the pixels appear like a grid structure
   if (!grid_lines) square.classList.toggle("remove-grid-lines");
 
-  square.setAttribute("draggable", false);  // TODO: this is useless as we already prevent the default dragging behaviour
+  square.setAttribute("draggable", false); // TODO: this is useless as we already prevent the default dragging behaviour
   // store the position the pixel has relative to the canvas (useful in "mapFill" function)
   square.setAttribute("row", row);
   square.setAttribute("col", col);
 
   // prevent drag behaviour
-  square.addEventListener('dragstart', e => {
-    // when a dragstart is fired, 
+  square.addEventListener("dragstart", (e) => {
+    // when a dragstart is fired,
     // prevent default behaviour of dragging the element
     // we won't need to set draggable to false
-    e.preventDefault()
-  })
+    e.preventDefault();
+  });
 
   // set up mouse event listeners
   square.addEventListener("mousedown", handleMouseDown);
   square.addEventListener("mouseenter", handleMouseEnter);
   // Set up touch event listeners
-  square.addEventListener('touchstart', handleTouchStart);
-  square.addEventListener('touchmove', handleTouchMove, false);
+  square.addEventListener("touchstart", handleTouchStart);
+  square.addEventListener("touchmove", handleTouchMove, false);
 
   /*  Note: no mouseup and touchend event was set up because we have a general one set at the body
    since it is bubbled
@@ -101,7 +101,7 @@ function removeAllSquares() {
   // remove all current squares/pixes from the canvas
   // canvas.innerHTML = ''; // ?? Alternative
 
-  while (canvas.firstChild){
+  while (canvas.firstChild) {
     canvas.removeChild(canvas.firstChild);
   }
 
@@ -112,30 +112,39 @@ function removeAllSquares() {
 /* SLIDER SECTION:
 Handles slider and allows it to manipulate the canvas/grid size
 */
-let slider = document.getElementById("size-slider");
+let slider = document.querySelector(".slider#size-slider");
 let value_display = document.querySelector(".size.settings span");
 slider.setAttribute("min", MIN_GRID_SIZE);
 slider.setAttribute("max", MAX_GRID_SIZE);
 slider.value = DEFAULT_GRID_SIZE;
 value_display.textContent = `${DEFAULT_GRID_SIZE}x${DEFAULT_GRID_SIZE}`;
-
+slider.style.setProperty("--thumb-pos", `${getThumbPos()}px`);
 
 let dragging = false;
-slider.addEventListener("input", (e) => {
+// when slider value is changed
+slider.addEventListener("change", (e) => {
   const value = e.currentTarget.value;
   value_display.textContent = `${value}x${value}`;
+  handleSliderEvent(e);
 });
 
-// mouseup will trigger whenever slider is released after dragging
-// also when clicked and released
-slider.onmouseup = handleSliderEvent;
-// slider.ontouchend = handleSliderEvent; // ! Causes a bug on mobile browsers can't tap on slider
+// when slider is being dragged
+slider.addEventListener("input", (e) => {
+  // update the track style
+  slider.style.setProperty("--thumb-pos", `${getThumbPos()}px`);
+});
 
 //  Handles slider touch and mouse events
-function handleSliderEvent(e){
+function handleSliderEvent(e) {
   const value = e.currentTarget.value;
   if (value != current_grid_size) updatePixelSize(parseInt(value)); // ! Why doesn't work without parse int when its still a string
+}
 
+// get thumb position from right
+function getThumbPos() {
+  let width = getComputedStyle(slider).width;
+  width = RegExp("[0-9]+").exec(width)[0];
+  return (slider.value / slider.max) * width - width;
 }
 
 /* CHANGE COLOR */
@@ -199,9 +208,7 @@ function changeColor(square) {
       return rf.toFixed(3);
     };
 
-    let random_color = `rgb(${r_int(255)}, ${r_int(255)}, ${r_int(
-      255
-    )}`;
+    let random_color = `rgb(${r_int(255)}, ${r_int(255)}, ${r_int(255)}`;
     square.style.background = random_color;
   } else square.style.background = pencil_color;
 }
@@ -215,10 +222,9 @@ const toggle_grid_btn = document.getElementById("toggle-grid");
 toggle_grid_btn.addEventListener("click", function () {
   // set the grid to transparent
   for (let i = 0; i < grid_map.length; i++) {
-      for (let j = 0; j < grid_map[i].length; j++) {
-        grid_map[i][j].classList.toggle("remove-grid-lines");
-        
-      }    
+    for (let j = 0; j < grid_map[i].length; j++) {
+      grid_map[i][j].classList.toggle("remove-grid-lines");
+    }
   }
   grid_lines = !grid_lines;
 });
@@ -271,14 +277,29 @@ function manageCursor(toolName) {
 }
 
 /* 
-DOWNLOAD BUTTON : SEE HTML FILE
+DOWNLOAD BUTTON :
 */
+/* 
+    SAVE AS PNG IMAGE
+     */
 
+let download_btn = document.getElementById("download");
+download_btn.addEventListener("click", (e) => {
+  const input = document.querySelector(".canvas");
+  html2canvas(input).then((canvas) => {
+    const image = canvas.toDataURL("img/png");
+    const anchor = document.createElement("a");
+    anchor.setAttribute("href", image);
+    anchor.setAttribute("download", "my-canvas.png");
+    anchor.click();
+    anchor.remove();
+  });
+});
 
 /* Whenever a mouse is released anywhere 
 then drawing action is stopped
 ?? This is done in body because of the bubbling effect mouseup offers */
-const body = document.querySelector('body')
+const body = document.querySelector("body");
 body.addEventListener("mouseup", (e) => {
   drawing = false;
 });
@@ -286,7 +307,6 @@ body.addEventListener("mouseup", (e) => {
 body.addEventListener("touchend", (e) => {
   drawing = false;
 });
-
 
 /* MOUSE and TOUCH events for the pixels */
 function handleMouseDown(e) {
@@ -298,7 +318,7 @@ function handleMouseDown(e) {
 
 function handleMouseEnter(e) {
   // If we are drawing then Continue drawing
-  if(drawing && current_tool_name != "fill"){
+  if (drawing && current_tool_name != "fill") {
     // change the pixel
     alterGrid(e.currentTarget);
   }
@@ -313,7 +333,7 @@ function handleTouchStart(e) {
   // Start drawing
   drawing = true;
   console.log("started drawing");
-  alterGrid(e.currentTarget)
+  alterGrid(e.currentTarget);
 }
 
 // Handle touch move events
@@ -323,22 +343,20 @@ function handleTouchMove(e) {
 
   // get the touch element and current touch position
   // ! NOTE: the target will always be the point where touchmove started
-  const touch = e.targetTouches[0]
-  const x = touch.clientX
-  const y = touch.clientY
+  const touch = e.targetTouches[0];
+  const x = touch.clientX;
+  const y = touch.clientY;
 
   // ! So we have to check what element is at position
-  const element = document.elementFromPoint(x, y)
+  const element = document.elementFromPoint(x, y);
 
   // if the element is not a pixel ignore
-  if (!element.classList.contains('pixel')) return
-
+  if (!element.classList.contains("pixel")) return;
 
   // Continue drawing
-  if(drawing && current_tool_name != "fill"){
+  if (drawing && current_tool_name != "fill") {
     alterGrid(element);
   }
-  
 }
 
 // Handle touch end events
@@ -451,9 +469,8 @@ function hexTorgb(hex) {
   }, ${("0x" + hex[5] + hex[6]) | 0})`;
 }
 
-
 // Load the squares to the canvas
 let grid_map = null;
 window.onload = () => {
-  grid_map = createSquares(DEFAULT_GRID_SIZE)
+  grid_map = createSquares(DEFAULT_GRID_SIZE);
 };

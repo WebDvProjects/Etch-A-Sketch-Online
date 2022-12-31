@@ -1,114 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="dist/bundle.js" defer></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="script.js" type="module" defer></script>
+    <link
+      rel="shortcut icon"
+      href="icons/rainbow_spiral_1.png"
+      type="image/x-icon" />
 
-  <link rel="shortcut icon" href="icons/rainbow_spiral_1.png" type="image/x-icon">
+    <title>Etch-a-Sketch Online</title>
+  </head>
 
-  <title>Etch-a-Sketch Online</title>
-</head>
+  <body>
+    <div class="header" draggable="false">
+      <span>ETCH-A-SKETCH</span>
+      <span class="description">
+        Drag around to draw, hover to the icons to see what they do 😉
+      </span>
+    </div>
+    <div class="content">
+      <div class="left sidebar">
+        <div class="size settings">
+          <p>Grid Size:</p>
+          <span>16x16</span>
+          <input
+            type="range"
+            class="slider"
+            id="size-slider"
+            title="Set grid size" />
+        </div>
 
-<body>
-  <div class="header" draggable="false">
-    <span>ETCH-A-SKETCH</span>
-    <span class="description">Drag around to draw, hover to the icons to see what they do 😉</span>
-  </div>
-  <div class="content">
-    <div class="left sidebar">
-      <div class="size settings">
-        <p>Grid Size:</p>
-        <span>16x16</span>
-        <input type="range" class="slider" id="size-slider" title="Set grid size" />
+        <div class="colour settings">
+          <p>Colour Settings</p>
+          <div class="pencil-color">
+            <p>Pencil</p>
+            <input
+              type="color"
+              name=""
+              id="pencil-color-selector"
+              title="pencil colour" />
+          </div>
+          <div class="bg-color">
+            <p>Background</p>
+            <input
+              type="color"
+              name=""
+              id="bg-color-selector"
+              title="background colour" />
+          </div>
+          <img
+            src="icons/rainbow.png"
+            class="icon rainbow"
+            alt="Rainbow"
+            title="Random colour" />
+        </div>
+
+        <div class="tool settings">
+          <span>Tools</span>
+          <div class="h-section">
+            <img
+              src="icons/pencil.png"
+              class="icon selected"
+              alt="pencil"
+              title="pencil tool" />
+            <img
+              src="icons/eraser.png"
+              class="icon"
+              alt="eraser"
+              title="eraser tool" />
+          </div>
+
+          <!-- <input type="range" class="slider" id="pencil-slider" /> -->
+          <div class="h-section">
+            <img
+              src="icons/fill-color.png"
+              class="icon"
+              alt="fill"
+              title="bucket fill" />
+            <img
+              src="icons/no-entry.png"
+              class="icon"
+              alt="no-tool"
+              title="no selection" />
+          </div>
+        </div>
       </div>
-
-      <div class="colour settings">
-        <p>Colour Settings</p>
-        <div class="pencil-color">
-          <p>Pencil</p>
-          <input type="color" name="" id="pencil-color-selector" title="pencil colour"/>
-        </div>
-        <div class="bg-color">
-          <p>Background</p>
-          <input type="color" name="" id="bg-color-selector" title="background colour"/>
-        </div>
-        <img src="icons/rainbow.png" class="icon rainbow" alt="Rainbow" title="Random colour"/>
-      </div>
-
-      <div class="tool settings">
-        <span>Tools</span>
-        <div class="h-section">
-          <img src="icons/pencil.png" class="icon selected" alt="pencil" title="pencil tool"/>
-          <img src="icons/eraser.png" class="icon" alt="eraser" title="eraser tool" />
+      <div class="canvas pencil" id="canvas"></div>
+      <div class="right sidebar">
+        <div class="grid settings h-section">
+          <img
+            src="icons/grid.png"
+            class="icon"
+            id="toggle-grid"
+            alt="Grid lines"
+            title="toggle grid lines" />
+          <img
+            src="icons/bin.png"
+            class="icon clear"
+            alt="Clear"
+            title="clear" />
         </div>
 
-        <!-- <input type="range" class="slider" id="pencil-slider" /> -->
-        <div class="h-section">
-          <img src="icons/fill-color.png" class="icon" alt="fill" title="bucket fill" />
-          <img src="icons/no-entry.png" class="icon" alt="no-tool" title="no selection" />
+        <div class="misc settings">
+          <!-- <a href="" download="canvas.png" id="download"> -->
+          <img
+            src="icons/floppy-disk.png"
+            class="icon"
+            alt="Save"
+            id="download"
+            title="download canvas" />
+          <!-- </a> -->
         </div>
-
       </div>
     </div>
-    <div class="canvas pencil" id="canvas"></div>
-    <div class="right sidebar">
-      <div class="grid settings h-section">
-        <img src="icons/grid.png" class="icon" id="toggle-grid" alt="Grid lines" title="toggle grid lines" />
-        <img src="icons/bin.png" class="icon clear" alt="Clear" title="clear"/>
-      </div>
 
-      <div class="misc settings">
-        <!-- <a href="" download="canvas.png" id="download"> -->
-        <img src="icons/floppy-disk.png" class="icon" alt="Save" id="download" title="download canvas" />
-        <!-- </a> -->
-
+    <div class="footer">
+      <p>Credits</p>
+      <div class="links">
+        <a
+          href="https://www.flaticon.com/free-icons/pencil"
+          title="pencil icons"
+          target="_blank">
+          Pencil icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/eraser"
+          title="eraser icons"
+          target="_blank">
+          Eraser icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/fill-color"
+          title="fill color icons"
+          target="_blank">
+          Fill color icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/rainbow"
+          title="rainbow icons"
+          target="_blank">
+          Rainbow icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/clear"
+          title="clear icons"
+          target="_blank">
+          Clear icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/grid"
+          title="grid icons"
+          target="_blank">
+          Grid icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/save"
+          title="save icons"
+          target="_blank">
+          Save icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/traffic"
+          title="traffic icons"
+          target="_blank">
+          Traffic icon
+        </a>
+        <a
+          href="https://www.flaticon.com/free-icons/fill-color"
+          title="fill color icons"
+          target="_blank">
+          Bucket-fill cursor
+        </a>
       </div>
     </div>
-  </div>
-
-  <div class="footer">
-    <p>Credits</p>
-    <div class="links">
-      <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons" target="_blank">Pencil icon</a>
-      <a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons" target="_blank">Eraser icon</a>
-      <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Fill color
-        icon</a>
-      <a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons" target="_blank">Rainbow icon</a>
-      <a href="https://www.flaticon.com/free-icons/clear" title="clear icons" target="_blank">Clear icon</a>
-      <a href="https://www.flaticon.com/free-icons/grid" title="grid icons" target="_blank">Grid icon</a>
-      <a href="https://www.flaticon.com/free-icons/save" title="save icons" target="_blank">Save icon</a>
-      <a href="https://www.flaticon.com/free-icons/traffic" title="traffic icons" target="_blank">Traffic icon</a>
-      <a href="https://www.flaticon.com/free-icons/fill-color" title="fill color icons" target="_blank">Bucket-fill
-        cursor</a>
-    </div>
-  </div>
-  <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
-  <script>
-    /* 
-    SAVE AS PNG IMAGE
-     */
-
-    let download_btn = document.getElementById('download')
-    download_btn.addEventListener('click', (e) => {
-      const input = document.querySelector('.canvas')
-      html2canvas(input).then((canvas) => {
-        const image = canvas.toDataURL('img/png');
-        const anchor = document.createElement("a")
-        anchor.setAttribute('href', image)
-        anchor.setAttribute('download', 'my-canvas.png')
-        anchor.click()
-        anchor.remove()
-      });
-
-    })
-
-  </script>
-</body>
-
+  </body>
 </html>
 
 <!-- also added links to footer
@@ -119,3 +188,4 @@
 <a href="https://www.flaticon.com/free-icons/clear" title="clear icons">Clear icons created by GOFOX - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/grid" title="grid icons">Grid icons created by Pixel perfect - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/save" title="save icons">Save icons created by Freepik - Flaticon</a>
+-->

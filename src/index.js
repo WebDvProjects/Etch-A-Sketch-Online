@@ -1,4 +1,5 @@
 import html2canvas from "html2canvas";
+import "./css/style.css";
 
 const canvas = document.getElementById("canvas");
 // prevent canvas from being dragged

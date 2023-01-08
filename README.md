@@ -1,7 +1,7 @@
 # Etch-a-Sketch Drawing tool
 An online drawing tool with a canvas of scalable pixel-like grids.
 
-[Link to page](https://caykay.github.io/Etch-A-Sketch-Online/)
+[Link to page](https://webdvprojects.github.io/Etch-A-Sketch-Online/)
 
 <img src="screenshots/goku_ss_no_grid.png" width="500">
 
